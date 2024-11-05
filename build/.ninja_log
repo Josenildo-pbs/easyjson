@@ -1,0 +1,11 @@
+# ninja log v5
+204	248	1730822838549170222	easyjson	15cef3c5cffcb09c
+0	179	1730822838481168049	CMakeFiles/easyjson.dir/src/main.c.o	181da057d9c10b6e
+5	204	1730822838508168912	CMakeFiles/easyjson.dir/src/parser.c.o	9ad4172116bd6f0a
+2	197	1730822838500168657	CMakeFiles/easyjson.dir/src/core.c.o	2820eebcfdcd6ddb
+3	186	1730822838489168305	CMakeFiles/easyjson.dir/src/lexer.c.o	e2520da04bd3321c
+11	196	1730822838499168625	CMakeFiles/easyjson.dir/src/interface.c.o	fcf391580a13b17
+0	48	1730830970829930151	build.ninja	7175ab7d1464ccf2
+1	127	1730830978076558459	CMakeFiles/easyjson.dir/src/main.c.o	181da057d9c10b6e
+2	129	1730830978079558305	CMakeFiles/easyjson.dir/src/parser.c.o	9ad4172116bd6f0a
+129	174	1730830978123556052	easyjson	15cef3c5cffcb09c

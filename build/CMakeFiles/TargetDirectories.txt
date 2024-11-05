@@ -1,0 +1,3 @@
+/home/josenildo/Desktop/easyJson/build/CMakeFiles/easyjson.dir
+/home/josenildo/Desktop/easyJson/build/CMakeFiles/edit_cache.dir
+/home/josenildo/Desktop/easyJson/build/CMakeFiles/rebuild_cache.dir
