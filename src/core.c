@@ -1,6 +1,8 @@
 #include "core.h"
 
+uint16_t testptr =0;
 void* allocate(size_t size) {
+    testptr=testptr+1;
     void* ptr = malloc(size);
     return ptr;
 }
@@ -32,26 +34,27 @@ void deallocate(content_t* content) {
     if(content->type==STR){
         // printf("%s\n",content->data.str);
         free(content->data.str);
-        free(content);
+        // free(content);
     }
-    else if(content->type==OBJ){
-        for (size_t i = 0; i < content->data.arr->len; i++)
-        {
-            entity_t* obj = content->data.arr->content[i]->data.obj;
-            // printf("%s\n",obj->name);
-            free(obj->name);
-            deallocate(obj->content);
-        }
+    else if(content->type==PAIR){
+      
+        free(content->data.pair->name);
+        deallocate(content->data.pair->content);
+        free(content->data.pair);
+
     }
-    else if(content->type==ARR){
+    else if(content->type==ARR || content->type== OBJ){
+        printf("arr size= %d\n",content->data.arr->len);
         for (size_t i = 0; i < content->data.arr->len; i++)
         {
             deallocate(content->data.arr->content[i]);
         }
-    }else{
-        // printContent(content);
-        free(content);
+        free(content->data.arr->content);
+        free(content->data.arr);
     }
+        
+    free(content);
+    
 }
 
 void cleanup(json_t* json) {
@@ -104,7 +107,7 @@ content_t* createData(dataType_t type, void* value) {
             break;
 
         case OBJ:
-            content->data.obj = (entity_t*)value;
+            content->data.pair = (entity_t*)value;
             break;
 
         case ARR:
@@ -151,10 +154,10 @@ entity_t* searchEntity(entity_t* root, const char* path) {
 
             for (uint16_t i = 0; i < array->len; i++) {
                 if (array->content[i] != NULL &&
-                    array->content[i]->data.obj != NULL &&
-                    array->content[i]->type == OBJ &&
-                    strcmp(array->content[i]->data.obj->name, token) == 0) {
-                    current_entity = array->content[i]->data.obj;
+                    array->content[i]->data.pair != NULL &&
+                    array->content[i]->type == PAIR &&
+                    strcmp(array->content[i]->data.pair->name, token) == 0) {
+                    current_entity = array->content[i]->data.pair;
                     found = 1;
                     break;
                 }

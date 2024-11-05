@@ -14,6 +14,7 @@ typedef enum {
     BOOL,
     EMPTY,
     ARR,
+    PAIR,
 }dataType_t;
 
 typedef struct array{
@@ -27,7 +28,7 @@ typedef struct content{
         char *str;
         uint32_t num;
         double fnum;
-        struct entity* obj;
+        struct entity* pair;
         struct array* arr; 
     } data;
 }content_t;
@@ -47,4 +48,5 @@ void cleanup();
 entity_t* createEntity(char* name);
 content_t* createData(dataType_t type, void* value);
 entity_t* searchEntity(entity_t* root, const char* path);
+extern uint16_t testptr;
 #endif 

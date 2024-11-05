@@ -34,21 +34,26 @@ content_t* parseArray(parser_t* parser) {
 }
 
 content_t* parseValue(parser_t* parser) {
-    content_t* content = (content_t*)allocate(sizeof(content));
+    content_t* content = NULL;
     switch (parser->currentToken.type) {
         case TOKEN_STRING:
+            content = (content_t*)allocate(sizeof(content));
             parseString(parser, content);
             break;
         case TOKEN_NUMBER:
+            content = (content_t*)allocate(sizeof(content));
             parseNumber(parser, content);
             break;
         case TOKEN_TRUE:
+            content = (content_t*)allocate(sizeof(content));
             parseTrue(parser, content);
             break;
         case TOKEN_FALSE:
+            content = (content_t*)allocate(sizeof(content));
             parseFalse(parser, content);
             break;
         case TOKEN_NULL:
+         content = (content_t*)allocate(sizeof(content));
             parseNull(parser, content);
             break;
         case TOKEN_OBJECT_START:
@@ -99,18 +104,21 @@ void parseNumber(parser_t* parser, content_t* content) {
 void parseTrue(parser_t* parser, content_t* content) {
     content->type = BOOL;
     content->data.num = 1;
+    free(parser->currentToken.value);
     expect(parser, TOKEN_TRUE);
 }
 
 void parseFalse(parser_t* parser, content_t* content) {
     content->type = BOOL;
     content->data.num = 0;
+    free(parser->currentToken.value);
     expect(parser, TOKEN_FALSE);
 }
 
 void parseNull(parser_t* parser, content_t* content) {
     content->type = EMPTY;
     content->data.num = 0;
+    free(parser->currentToken.value);
     expect(parser, TOKEN_NULL);
 }
 
@@ -145,8 +153,8 @@ content_t* parseKeyValuePair(parser_t* parser) {
     entity_t* entity = (entity_t*)allocate(sizeof(entity_t));
     content_t* content = (content_t*)allocate(sizeof(content_t));
 
-    content->type = OBJ;
-    content->data.obj = entity;
+    content->type = PAIR;
+    content->data.pair = entity;
 
     entity->name = strdup(parser->currentToken.value);
     free(parser->currentToken.value);
@@ -162,7 +170,7 @@ json_t* parser(char* str){
     lexer.input=strdup(str);
     lexer.pos= 0;
 
-    json_t* json= (json_t*)malloc(sizeof(json_t));
+    json_t* json= (json_t*)allocate(sizeof(json_t));
     json->root=NULL;
 
     entity_t *entity = (entity_t*)allocate(sizeof(entity_t));

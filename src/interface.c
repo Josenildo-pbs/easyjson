@@ -45,9 +45,9 @@ void stringifyContent(char **json_str, size_t *len, content_t *content, uint16_t
             for (uint16_t i = 0; i < content->data.arr->len; i++) {
                 if(formated)space(json_str, len, formated);
                 appendString(json_str, len, "\"");
-                appendString(json_str, len, content->data.arr->content[i]->data.obj->name);
+                appendString(json_str, len, content->data.arr->content[i]->data.pair->name);
                 appendString(json_str, len, "\":");
-                stringifyContent(json_str, len, content->data.arr->content[i]->data.obj->content, formated?formated+1:formated);
+                stringifyContent(json_str, len, content->data.arr->content[i]->data.pair->content, formated?formated+1:formated);
                 appendString(json_str, len, ",");
                 if(formated)appendString(json_str, len, "\n");
             }
